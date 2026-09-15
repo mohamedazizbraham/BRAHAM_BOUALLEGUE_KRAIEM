@@ -38,4 +38,4 @@ L’objectif de cette organisation est de conserver la traçabilité du travail 
 
 - le **cahier des charges consolidé**, construit à partir des travaux individuels des membres du groupe ;
 
-- le **projet final**, correspondant à la version commune retenue après comparaison, vérification et consolidation des différentes réalisations.
+- le dossier **realisation**, correspondant à la version commune retenue après comparaison, vérification et consolidation des différentes réalisations.
