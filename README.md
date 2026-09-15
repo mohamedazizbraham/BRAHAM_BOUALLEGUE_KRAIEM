@@ -23,7 +23,7 @@ Dans chaque dossier, vous trouverez :
 - `PROMPTS_Nom_Prenom_CdC`  
   Les prompts utilisés pour concevoir et générer le cahier des charges individuel.
 
-- `PROMPTS_Nom_Prenom_realisation`  
+- `PROMPTS_Nom_Prenom__REAL`  
   Les prompts utilisés pendant la phase de réalisation, incluant les spécifications, vérifications, tests, corrections et itérations.
 
 - le **cahier des charges individuel** généré à partir des prompts de l’étudiant ;
