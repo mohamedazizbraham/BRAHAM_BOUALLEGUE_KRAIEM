@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admission Patient — FHIR R4 → HL7 v2</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">Interopérabilité en santé · Sujet A</p>
+      <h1>Admission d’un patient</h1>
+      <p class="subtitle">FHIR R4 réel → Encounter → HL7 v2.5.1 ADT^A01</p>
+    </div>
+    <div id="serverBadge" class="badge pending">Serveur : vérification…</div>
+  </header>
+
+  <main class="container">
+    <section class="panel search-panel">
+      <div class="section-title">
+        <div>
+          <span class="step">1</span>
+          <h2>Rechercher un patient réel</h2>
+        </div>
+        <button id="checkServerBtn" class="secondary">Vérifier /metadata</button>
+      </div>
+      <div class="search-row">
+        <select id="searchType" aria-label="Type de recherche">
+          <option value="name">Nom</option>
+          <option value="identifier">Identifiant métier</option>
+          <option value="id">FHIR resource id</option>
+        </select>
+        <input id="searchInput" type="text" placeholder="Ex. Smith" autocomplete="off" />
+        <button id="searchBtn" class="primary">Rechercher</button>
+      </div>
+      <p class="hint">Les résultats viennent du serveur HAPI FHIR. Aucun patient n’est embarqué dans l’application.</p>
+      <div id="searchError" class="message error hidden"></div>
+      <div id="searchInfo" class="message info hidden"></div>
+      <div id="results" class="results"></div>
+    </section>
+
+    <section id="selectedSection" class="panel hidden">
+      <div class="section-title">
+        <div>
+          <span class="step">2</span>
+          <h2>Patient sélectionné</h2>
+        </div>
+        <button id="admitBtn" class="primary">Admettre ce patient</button>
+      </div>
+      <div id="selectedPatient" class="business-card"></div>
+      <div id="admissionMessage" class="message hidden"></div>
+    </section>
+
+    <section id="workspace" class="panel hidden">
+      <nav class="tabs" aria-label="Vues de démonstration">
+        <button class="tab active" data-tab="business">Vue métier</button>
+        <button class="tab" data-tab="fhir">FHIR réel</button>
+        <button class="tab" data-tab="hl7">HL7 v2</button>
+        <button class="tab" data-tab="mapping">Mapping</button>
+        <button class="tab" data-tab="logs">Traçabilité</button>
+      </nav>
+
+      <div id="tab-business" class="tab-content active">
+        <div class="section-title compact"><h2>Résumé exploitable de l’admission</h2></div>
+        <div id="businessView" class="business-grid"></div>
+      </div>
+
+      <div id="tab-fhir" class="tab-content">
+        <div class="section-title compact"><h2>Ressources FHIR réellement utilisées</h2></div>
+        <div class="json-grid">
+          <article>
+            <h3>Patient</h3>
+            <pre id="patientJson"></pre>
+          </article>
+          <article>
+            <h3>Encounter</h3>
+            <pre id="encounterJson"></pre>
+          </article>
+        </div>
+        <div id="referenceCheck" class="message info"></div>
+      </div>
+
+      <div id="tab-hl7" class="tab-content">
+        <div class="section-title compact">
+          <h2>Conversion HL7 v2.5.1 — ADT^A01</h2>
+          <button id="copyHl7Btn" class="secondary">Copier</button>
+        </div>
+        <pre id="hl7Output" class="hl7"></pre>
+        <div id="hl7Warnings"></div>
+      </div>
+
+      <div id="tab-mapping" class="tab-content">
+        <div class="section-title compact"><h2>Alignement sémantique et transformations</h2></div>
+        <table class="mapping-table">
+          <thead>
+            <tr><th>Source FHIR</th><th>Système source</th><th>Règle</th><th>Cible HL7</th><th>Type</th><th>Statut</th></tr>
+          </thead>
+          <tbody id="mappingBody"></tbody>
+        </table>
+        <p class="hint">Un mapping ambigu n’est jamais traduit silencieusement. Il est signalé à l’utilisateur.</p>
+      </div>
+
+      <div id="tab-logs" class="tab-content">
+        <div class="section-title compact">
+          <h2>Traçabilité minimale des échanges</h2>
+          <button id="clearLogsBtn" class="secondary">Effacer l’affichage</button>
+        </div>
+        <table class="logs-table">
+          <thead><tr><th>Heure</th><th>Méthode</th><th>Endpoint</th><th>HTTP</th><th>Résultat</th></tr></thead>
+          <tbody id="logsBody"></tbody>
+        </table>
+        <p class="hint">Les logs n’enregistrent pas le nom ni les données personnelles du patient.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    Prototype pédagogique — données provenant d’un serveur public de test. Ne jamais saisir de vraies données de santé.
+  </footer>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
