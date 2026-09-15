@@ -1,0 +1,44 @@
+﻿<!doctype html>
+<html lang="fr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admission d’un patient</title><link rel="stylesheet" href="/static/style.css">
+<script src="/static/app.js" defer></script></head>
+<body><header><div><small>PROTOTYPE D’INTEROPÉRABILITÉ · FHIR R4 → HL7 v2.5.1</small>
+<h1>Admission d’un patient</h1><p>Données fictives uniquement · Serveur public HAPI FHIR</p></div>
+<button id="health" type="button">Vérifier le serveur</button><span id="server" role="status">Connexion en cours…</span></header>
+<nav aria-label="Vues de démonstration">
+<a href="#admission">1. Admission</a><a href="#result">2. Résultat métier</a><a href="#fhir">3. Ressources FHIR</a>
+<a href="#hl7">4. HL7 v2</a><a href="#mapping">5. Mapping / Terminologie</a><a href="#logs">6. Logs</a></nav>
+<main><div id="notice" role="status" aria-live="polite"></div>
+<section id="admission"><h2>1. Admission</h2>
+<p>Recherchez un patient fictif existant, puis sélectionnez son identifiant métier.</p>
+<form id="search-form"><div class="grid">
+<label>Identifiant métier<input name="identifier" maxlength="200"></label>
+<label>Système d’identifiant (facultatif)<input name="system" maxlength="500" placeholder="https://example.org/…"></label>
+<label>Ou nom du patient fictif<input name="name" maxlength="120"></label>
+</div><button>Rechercher</button></form>
+<form id="read-form"><label>Ou identifiant technique FHIR<input name="id" required pattern="[A-Za-z0-9.\-]{1,64}" maxlength="64"></label>
+<button>Lire le Patient</button></form>
+<div id="candidates"></div>
+<form id="admit-form"><fieldset id="admit-fields" disabled><legend>Patient sélectionné et séjour</legend>
+<div id="identity">Aucun patient sélectionné.</div>
+<label>Identifiant métier à utiliser dans PID-3<select id="identifier-select"></select></label>
+<div class="grid"><label>Type de séjour<input value="Hospitalisation" readonly></label>
+<label>Service (facultatif)<input name="service" maxlength="120"></label>
+<label>Chambre (facultatif)<input name="room" maxlength="120"></label>
+<label>Lit (facultatif)<input name="bed" maxlength="120"></label>
+<label>Date et heure d’admission<input name="admission_time" type="datetime-local" step="1" required></label></div>
+<p id="timezone"></p><p>La localisation est facultative ; renseignez ses trois champs ensemble.</p>
+<button id="admit-button">Enregistrer l’admission</button></fieldset></form></section>
+<section id="result"><h2>2. Résultat métier</h2><div id="summary">Aucune admission enregistrée dans ce parcours.</div></section>
+<section id="fhir"><h2>3. Ressources FHIR</h2><h3>Patient FHIR</h3><pre id="patient-json">Aucune ressource chargée.</pre>
+<h3>Encounter FHIR</h3><pre id="encounter-json">Aucune admission enregistrée.</pre></section>
+<section id="hl7"><h2>4. HL7 v2.5.1 — ADT^A01</h2><p id="mapping-state"></p><button id="copy" disabled>Copier</button>
+<pre id="hl7-message">Aucun message généré.</pre><ul id="warnings"></ul></section>
+<section id="mapping"><h2>5. Mapping / Terminologie</h2>
+<p>CDC §10 : male → M, female → F, unknown → U. other reste non mappé avec une ambiguïté visible.</p>
+<div class="table-wrap"><table><thead><tr><th>Concept</th><th>FHIR source</th><th>Transformation / type</th><th>HL7 cible</th><th>Destination</th><th>Ambiguïté</th></tr></thead><tbody id="mapping-rows"></tbody></table></div></section>
+<section id="logs"><h2>6. Logs techniques</h2><p>Échanges réels de cette page, conservés en mémoire (500 dernières traces). Paramètres de recherche masqués.</p>
+<div class="table-wrap"><table><thead><tr><th>Horodatage</th><th>Méthode</th><th>Ressource</th><th>Endpoint</th><th>HTTP</th><th>Résultat</th><th>ID FHIR</th><th>Détail</th></tr></thead><tbody id="log-rows"></tbody></table></div></section>
+</main><footer>Prototype pédagogique · Noyau ADT du CDC · Aucun envoi vers un SIH</footer></body></html>
+
