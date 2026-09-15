@@ -1,5 +1,3 @@
-# int-rop-rabilit-_BRAHAM_BOUALLEGUE_KRAIEM
-
 # Projet d’évaluation — Interopérabilité en santé
 
 Ce dépôt contient le travail réalisé dans le cadre de l’évaluation d’interopérabilité en santé sur le sujet :
